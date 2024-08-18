@@ -1,4 +1,4 @@
-# Takeoff - Cursor Course: Section 2
+# Takeoff - Cursor Course
 
 This is the repo for the Cursor Course on Takeoff.
 
