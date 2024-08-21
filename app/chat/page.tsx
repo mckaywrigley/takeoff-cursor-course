@@ -11,14 +11,14 @@ import ReactMarkdown from "react-markdown";
 import ReactTextareaAutosize from "react-textarea-autosize";
 import remarkGfm from "remark-gfm";
 
-export interface Chat {
+interface Chat {
   id: number;
   name: string;
   messages: ChatMessage[];
   createdAt: number;
 }
 
-export interface ChatMessage {
+interface ChatMessage {
   id: number;
   role: "user" | "assistant";
   content: string;

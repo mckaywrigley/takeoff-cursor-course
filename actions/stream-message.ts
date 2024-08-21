@@ -1,9 +1,20 @@
 "use server";
 
-import { ChatMessage } from "@/app/chat/page";
 import { openai } from "@ai-sdk/openai";
 import { streamText } from "ai";
 import { createStreamableValue } from "ai/rsc";
+
+export interface ChatMessage {
+  id: number;
+  role: "user" | "assistant";
+  content: string;
+}
+
+export interface Chat {
+  id: string;
+  name: string;
+  messages: ChatMessage[];
+}
 
 export async function streamMessage(messages: ChatMessage[]) {
   const stream = createStreamableValue("");
