@@ -327,6 +327,11 @@ export default function ChatPage() {
                         <ReactMarkdown
                           className="prose dark:prose-invert text-foreground space-y-0"
                           remarkPlugins={[remarkGfm]}
+                          components={{
+                            p({ children }) {
+                              return <p className="m-0">{children}</p>;
+                            }
+                          }}
                         >
                           {message.content}
                         </ReactMarkdown>
