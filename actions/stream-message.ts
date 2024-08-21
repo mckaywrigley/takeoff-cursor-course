@@ -1,6 +1,6 @@
 "use server";
 
-import { ChatMessage } from "@/app/page";
+import { ChatMessage } from "@/app/chat/page";
 import { createStreamableValue } from "ai/rsc";
 import OpenAI from "openai";
 
