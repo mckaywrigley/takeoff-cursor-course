@@ -1,17 +1,12 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
-import "react-quill/dist/quill.snow.css";
-
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 interface Note {
   id: number;
   content: string;
   tags: string[];
-  isRichText: boolean;
 }
 
 export default function MarkdownTodos() {
@@ -20,7 +15,6 @@ export default function MarkdownTodos() {
   const [editingId, setEditingId] = useState<number | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [darkMode, setDarkMode] = useState(false);
-  const [isRichText, setIsRichText] = useState(false);
 
   useEffect(() => {
     const storedNotes = localStorage.getItem("notes");
@@ -35,7 +29,7 @@ export default function MarkdownTodos() {
 
   const addNote = () => {
     if (newNote.trim()) {
-      setNotes([...notes, { id: Date.now(), content: newNote, tags: [], isRichText }]);
+      setNotes([...notes, { id: Date.now(), content: newNote, tags: [] }]);
       setNewNote("");
     }
   };
@@ -74,32 +68,14 @@ export default function MarkdownTodos() {
         Toggle Dark Mode
       </button>
       <div className="mb-4">
-        <div className="flex items-center mb-2">
-          <input
-            type="checkbox"
-            checked={isRichText}
-            onChange={() => setIsRichText(!isRichText)}
-            className="mr-2"
-          />
-          <label>Use Rich Text Editor</label>
-        </div>
-        {isRichText ? (
-          <ReactQuill
-            theme="snow"
-            value={newNote}
-            onChange={setNewNote}
-            className="bg-white text-black"
-          />
-        ) : (
-          <input
-            id="new-note-input"
-            type="text"
-            value={newNote}
-            onChange={(e) => setNewNote(e.target.value)}
-            placeholder="New note..."
-            className="w-full p-2 border rounded text-black"
-          />
-        )}
+        <input
+          id="new-note-input"
+          type="text"
+          value={newNote}
+          onChange={(e) => setNewNote(e.target.value)}
+          placeholder="New note..."
+          className="w-full p-2 border rounded text-black"
+        />
         <button
           onClick={addNote}
           className="mt-2 px-4 py-2 bg-green-500 text-white rounded"
@@ -121,26 +97,18 @@ export default function MarkdownTodos() {
             className="mb-4 p-2 border rounded"
           >
             {editingId === note.id ? (
-              note.isRichText ? (
-                <ReactQuill
-                  theme="snow"
-                  value={note.content}
-                  onChange={(content) => editNote(note.id, content)}
-                  onBlur={() => setEditingId(null)}
-                  className="bg-white text-black"
-                />
-              ) : (
-                <input
-                  type="text"
-                  value={note.content}
-                  onChange={(e) => editNote(note.id, e.target.value)}
-                  onBlur={() => setEditingId(null)}
-                  className="w-full p-2 border rounded text-black"
-                  autoFocus
-                />
-              )
+              <input
+                type="text"
+                value={note.content}
+                onChange={(e) => editNote(note.id, e.target.value)}
+                onBlur={() => setEditingId(null)}
+                className="w-full p-2 border rounded text-black"
+                autoFocus
+              />
             ) : (
-              <div onClick={() => setEditingId(note.id)}>{note.isRichText ? <div dangerouslySetInnerHTML={{ __html: note.content }} /> : <ReactMarkdown>{note.content}</ReactMarkdown>}</div>
+              <div onClick={() => setEditingId(note.id)}>
+                <ReactMarkdown>{note.content}</ReactMarkdown>
+              </div>
             )}
             <button
               onClick={() => deleteNote(note.id)}
