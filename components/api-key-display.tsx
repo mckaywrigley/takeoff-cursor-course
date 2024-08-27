@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useState } from "react";
 
 export default function ApiKeyDisplay({ apiKey, companyInfo }) {
@@ -12,6 +13,17 @@ export default function ApiKeyDisplay({ apiKey, companyInfo }) {
   return (
     <div className="space-y-4">
       <h2 className="text-xl font-semibold">Company Information</h2>
+      {companyInfo.companyLogo && (
+        <div className="mb-4">
+          <Image
+            src={URL.createObjectURL(companyInfo.companyLogo)}
+            alt="Company Logo"
+            width={100}
+            height={100}
+            className="object-contain"
+          />
+        </div>
+      )}
       <p>
         <strong>Name:</strong> {companyInfo.companyName}
       </p>
