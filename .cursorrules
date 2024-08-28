@@ -1,1 +1,1 @@
-- components should go in /components named as new-component.tsx unless otherwise specified
+- components should go in `/components` named as `new-component.tsx` unless otherwise specified
